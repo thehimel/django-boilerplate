@@ -44,12 +44,14 @@ from django.urls import include, path
 
 if settings.DEBUG:
     import debug_toolbar
+
     # For Django Debug Toolbar in debug mode.
     urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
 
     # To serve static files in debug mode
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)
+
     # To serve media files in debug mode
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
@@ -77,15 +79,15 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 ```python
 TEMPLATES = [
     {
-        ...
+        # ...
         'DIRS': [TEMPLATE_DIR],
-        ...
+        # ...
     },
 ]
 ```
 
 - Create directory 'src/templates'
-- Create 'src/templates/base.html' and 'src/templates/home.html'
+- Create 'src/templates/core/base.html' and 'src/templates/core/home.html'. We are keeping these html files inside core to keep all templates according to the apps.
 - Create directory 'src/media'
 
 ## Lesson 2 - Setting up Multiple Settings Modules
@@ -97,8 +99,12 @@ We want to keep the settings.py as much as readable. Writing development setting
 - Create 'demo/settings/development.py' and 'demo/settings/production.py' for development and production respectively.
 - In base.py update the BASE_DIR as we have moved our settings file one directory down.
 ```python
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Customized the BASE_DIR as changed settings.py to settings directory.
+# By this we are selecting src as BASE_DIR.
+# Present file name is base.py. Parent of base.py is settings.
+# Parent of settings is demo and parent of demo is src.
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 ```
 
 - Extend development.py and production.py from base.py by including this in both the files. This way, development.py and production.py will keep all the settings of base.py and add few more settings to the existing settings.
@@ -157,6 +163,28 @@ pip install python-decouple
 - Add '.env' to the .gitignore so that this file is not saved in the git repository. When you initiate Python .gitignore in GitHub, this is automatically added. But check it once.
 - In development Decouple will fetch the env variables from .env file.
 - In Heroku, you can add the env variables manually. That time Decouple will fetch the keys from the OS.
+- Edit src/manage.py to select the correct settings based on development or production.
+```python
+import os
+import sys
+from decouple import config
+
+
+# For Development use 'demo/settings/development.py'
+# For Production use 'demo/settings/production.py'
+DEBUG = config('DEBUG', cast=bool)
+
+if DEBUG:
+    SETTINGS_MODULE = 'demo.settings.development'
+else:
+    SETTINGS_MODULE = 'demo.settings.production'
+
+
+def main():
+    # ...
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', SETTINGS_MODULE)
+    # ...
+```
 
 ## Lesson 4 - How to Create Custom Django Commands
 We use `python manage.py command` to execute a command. We can add our custom commands this way.
@@ -181,3 +209,40 @@ python manage.py help
 parser.add_argument('-p', '--prefix', type=str, help='Info to help.')
 ```
 - Write the logic and finish writing the code for rename command.
+
+## Extra
+### Section X.1 - Configure demo/urls.py
+- Edit demo/urls.py
+```python
+urlpatterns = [
+    ...
+    path('', include('core.urls', namespace='core'))
+    ...
+]
+```
+
+- Edit core/urls.py
+```python
+from django.urls import path
+from .views import HomeView
+
+app_name = 'core'
+
+urlpatterns = [
+    path('', HomeView.as_view(), name='home'),
+]
+```
+
+- Edit core/views.py
+```python
+from django.shortcuts import render
+from django.views.generic import TemplateView
+
+
+class HomeView(TemplateView):
+    template_name = "core/home.html"
+```
+
+## Important
+- For testing purpose '.env' is commented inside .gitignore. Uncomment that just after cloning this repository.
+- During production, set environment varibale DEBUG=True as this will select the productions settings.
