@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
 from decouple import config
 from pathlib import Path
 
@@ -21,7 +20,9 @@ from pathlib import Path
 # Parent of settings is demo and parent of demo is src.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
-TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+# TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
+TEMPLATE_DIR = BASE_DIR / 'templates'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -99,9 +100,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [BASE_DIR / 'static_files']
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Media files (Uploaded by the users)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
