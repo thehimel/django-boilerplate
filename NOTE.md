@@ -148,8 +148,36 @@ DEBUG_TOOLBAR_CONFIG = {
 We don't want to hard code our confidentials information.
 Python Decouple is used to safely fetch the confidentials keys from .env or OS. [More Info](https://pypi.org/project/python-decouple/)
 
+- Install Python Decouple
+```bash
+pip install python-decouple
+```
 - For development create 'src/.env'. Python Decouple will fetch the keys from here if exists.
 - Order of search by Decouple: 1. Environment variables, 2. Repository: ini or .env file, 3. Default argument passed to config.
 - Add '.env' to the .gitignore so that this file is not saved in the git repository. When you initiate Python .gitignore in GitHub, this is automatically added. But check it once.
 - In development Decouple will fetch the env variables from .env file.
 - In Heroku, you can add the env variables manually. That time Decouple will fetch the keys from the OS.
+
+## Lesson 4 - How to Create Custom Django Commands
+We use `python manage.py command` to execute a command. We can add our custom commands this way.
+To create custom command(s), we must create an app. We can name our main app as 'core' or 'main'.
+
+- Create an app 'core'
+```bash
+python manage.py startapp core
+# or
+django-admin startapp core
+```
+
+- Create 'core/management/commands/rename.py'. Here 'rename' is our command, thus we create this py file here.
+- The management directory can't be in demo which is our project directory. It has to be inside an app.
+- Create Command class in this file to make the command.
+- If you type this command, you can get information regarding all the commands. You can also notice rename command listed under core.
+```bash
+python manage.py help
+```
+- In the add_arguments() method of Command class, if you name an argument with dash('-') at the beginning, then it will be an optional commands.
+```python
+parser.add_argument('-p', '--prefix', type=str, help='Info to help.')
+```
+- Write the logic and finish writing the code for rename command.
