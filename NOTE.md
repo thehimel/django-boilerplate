@@ -143,3 +143,13 @@ DEBUG_TOOLBAR_CONFIG = {
 - Configure development.py and production.py based on the needs.
 - We'll use sqlite for development and postgres for production.
 - Important for production. DEBUG=False and change ALLOWED_HOSTS doesn't contain the 127.0.0.1 or localhost.
+
+## Lesson 3 - How to Use Python Decouple
+We don't want to hard code our confidentials information.
+Python Decouple is used to safely fetch the confidentials keys from .env or OS. [More Info](https://pypi.org/project/python-decouple/)
+
+- For development create 'src/.env'. Python Decouple will fetch the keys from here if exists.
+- Order of search by Decouple: 1. Environment variables, 2. Repository: ini or .env file, 3. Default argument passed to config.
+- Add '.env' to the .gitignore so that this file is not saved in the git repository. When you initiate Python .gitignore in GitHub, this is automatically added. But check it once.
+- In development Decouple will fetch the env variables from .env file.
+- In Heroku, you can add the env variables manually. That time Decouple will fetch the keys from the OS.
