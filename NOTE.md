@@ -68,7 +68,13 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 ```
 - Edit DIRS of TEMPLATES in settings.py
 ```python
-'DIRS': [TEMPLATE_DIR],
+TEMPLATES = [
+    {
+        ...
+        'DIRS': [TEMPLATE_DIR],
+        ...
+    },
+]
 ```
 - Create directory src/templates
 - Create src/templates/base.html and src/templates/home.html
