@@ -60,7 +60,7 @@ INTERNAL_IPS = ['127.0.0.1',]
 
 - Add DEBUG_TOOLBAR_PANELS to settings.py from [here](https://django-debug-toolbar.readthedocs.io/en/latest/configuration.html)
 - Add DEBUG_TOOLBAR_CONFIG in settings.py
-- (Optional) You can run collectstatic command to fetch all the django backend static files. In will create src/static_root directory with other directories like admin, debug_toolbar, etc.
+- [Optional] You can run collectstatic command to fetch all the django backend static files. In will create src/static_root directory with other directories like admin, debug_toolbar, etc.
 [More Info](https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/)
 `python manage.py collectstatic`
 
