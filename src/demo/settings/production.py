@@ -1,7 +1,10 @@
 # flake8: noqa
 from .base import *
 
+# In production, make sure environment variable DEBUG=False
 DEBUG = config('DEBUG', cast=bool)
+
+# Include your hosts here
 ALLOWED_HOSTS = ['ip-address', 'www.your-website.com']
 
 DATABASES = {

@@ -4,6 +4,7 @@ from .base import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Including '127.0.0.1' for debug_toolbar
 ALLOWED_HOSTS = ['127.0.0.1']
 
 INSTALLED_APPS += [
@@ -33,6 +34,7 @@ DEBUG_TOOLBAR_PANELS = [
 ]
 
 
+# Show or hide debug_toolbar
 def show_toolbar(request):
     return True
 
