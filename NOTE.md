@@ -35,7 +35,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ```
 
-- Create directory src/static_files
+- Create directory 'src/static_files'
 - Add this on the bottom of demo/urls.py
 ```python
 from django.conf import settings
@@ -55,10 +55,10 @@ if settings.DEBUG:
                           document_root=settings.MEDIA_ROOT)
 ```
 
-- Add DDT MIDDLEWARE in settings.py
-- Add INTERNAL_IPS to settings.py
+- Add DDT MIDDLEWARE in settings.py.
+- For development edit ALLOWED_HOSTS in settings.py. This is needed to run the DDT in debug mode.
 ```python
-INTERNAL_IPS = ['127.0.0.1',]
+ALLOWED_HOSTS = ['127.0.0.1',]
 ```
 
 - Add DEBUG_TOOLBAR_PANELS to settings.py from [here](https://django-debug-toolbar.readthedocs.io/en/latest/configuration.html)
@@ -83,8 +83,63 @@ TEMPLATES = [
     },
 ]
 ```
-- Create directory src/templates
-- Create src/templates/base.html and src/templates/home.html
+
+- Create directory 'src/templates'
+- Create 'src/templates/base.html' and 'src/templates/home.html'
+- Create directory 'src/media'
 
 ## Lesson 2 - Setting up Multiple Settings Modules
-### Section 2.1 -
+We want to keep the settings.py as much as readable. Writing development settings and production settings in the same file makes it very large. Thus, with this technique we are going to decouple everthing and structure the settings in a better way.
+
+- Create directory 'demo/settings'
+- Create 'demo/settings/__init__.py' to enable file referencing in this directory.
+- Create 'demo/settings/base.py' where the default django settings and important settings will be stored. This is the common settings for development and production. Copy everthing from settings.py to base.py and delete the settings.py.
+- Create 'demo/settings/development.py' and 'demo/settings/production.py' for development and production respectively.
+- In base.py update the BASE_DIR as we have moved our settings file one directory down.
+```python
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.dirname(os.path.abspath(__file__))))
+```
+
+- Extend development.py and production.py from base.py by including this in both the files. This way, development.py and production.py will keep all the settings of base.py and add few more settings to the existing settings.
+```python
+from .base import *
+```
+- Move DEBUG and ALLOWED_HOSTS variables in development.py and production.py. These variables will will defer from each other based development or production.
+- We need debug_toolbar and the following middleware only on development mode. Thus, move these from base.py to development.py. Also add the DEBUG TOOLBAR SETTINGS here.
+```python
+INSTALLED_APPS += [
+    'debug_toolbar'
+]
+
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+
+# DEBUG TOOLBAR SETTINGS
+DEBUG_TOOLBAR_PANELS = [
+    'debug_toolbar.panels.versions.VersionsPanel',
+    'debug_toolbar.panels.timer.TimerPanel',
+    'debug_toolbar.panels.settings.SettingsPanel',
+    'debug_toolbar.panels.headers.HeadersPanel',
+    'debug_toolbar.panels.request.RequestPanel',
+    'debug_toolbar.panels.sql.SQLPanel',
+    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+    'debug_toolbar.panels.templates.TemplatesPanel',
+    'debug_toolbar.panels.cache.CachePanel',
+    'debug_toolbar.panels.signals.SignalsPanel',
+    'debug_toolbar.panels.logging.LoggingPanel',
+    'debug_toolbar.panels.redirects.RedirectsPanel',
+]
+
+
+def show_toolbar(request):
+    return True
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'SHOW_TOOLBAR_CALLBACK': show_toolbar
+}
+```
+- Configure development.py and production.py based on the needs.
+- We'll use sqlite for development and postgres for production.
+- Important for production. DEBUG=False and change ALLOWED_HOSTS doesn't contain the 127.0.0.1 or localhost.
