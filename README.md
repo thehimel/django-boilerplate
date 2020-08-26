@@ -19,7 +19,7 @@ Useful Links
 python manage.py rename <current_project_name> <new_project_name>
 
 #Example
-python manage.py demo my_project
+python manage.py rename demo my_project
 ```
 
 #### Installing MiniConda
