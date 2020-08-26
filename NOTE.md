@@ -4,7 +4,6 @@
 ### Section 1.1 - Project Initialization
 - Install miniconda from [here](https://docs.conda.io/en/latest/miniconda.html)
 - Create and activate a virtual environment.
-
 ```bash
 prompt $g
 conda remove --name env_dj --all
@@ -26,7 +25,6 @@ Django Debug Toolbar is used to have a look at the underlying information.
 - Install DDT. `pip install django-debug-toolbar`
 - Include 'debug_toolbar' in the INSTALLED_APPS of src/demo/settings.py
 - Include the following lines in the settings.py.
-
 ```bash
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files')]
@@ -39,7 +37,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 - Create directory src/static_files
 - Add this on the bottom of demo/urls.py
-
 ```python
 from django.conf import settings
 from django.urls import include, path
@@ -60,7 +57,6 @@ if settings.DEBUG:
 
 - Add DDT MIDDLEWARE in settings.py
 - Add INTERNAL_IPS to settings.py
-
 ```python
 INTERNAL_IPS = ['127.0.0.1',]
 ```
@@ -69,18 +65,15 @@ INTERNAL_IPS = ['127.0.0.1',]
 - Add DEBUG_TOOLBAR_CONFIG in settings.py
 - [Optional] You can run collectstatic command to fetch all the django backend static files. In will create src/static_root directory with other directories like admin, debug_toolbar, etc.
 [More Info](https://docs.djangoproject.com/en/3.1/ref/contrib/staticfiles/).
-
 `python manage.py collectstatic`
 
 ### Section 1.3 - Configure templates
 - On the top of settings.py under BASE_DIR, add TEMPLATE_DIR.
-
 ```python
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 ```
 
 - Edit DIRS of TEMPLATES in settings.py
-
 ```python
 TEMPLATES = [
     {
@@ -90,7 +83,6 @@ TEMPLATES = [
     },
 ]
 ```
-
 - Create directory src/templates
 - Create src/templates/base.html and src/templates/home.html
 
