@@ -72,7 +72,7 @@ python manage.py runserver
 
 ## Important Note
 - Uncomment '.env' inside .gitignore so that .env file is not uploaded in the repository.
-- Edit '.vscode/settings.json' ss per your configurations.
+- Edit '.vscode/settings.json' ss per your choices.
 
 ## Production Note
 - Make sure to set environmental variable DEBUG=False.
