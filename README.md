@@ -4,7 +4,7 @@ A boilerplate project for Django to fast initialization.
 All backend code follows [PEP8 style guidelines](https://www.python.org/dev/peps/pep-0008/).
 
 Useful Links
-- [pycodestyle Error Codes](https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes).
+- [pycodestyle Error Codes](https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes)
 - [flake8 Error Codes](https://flake8.pycqa.org/en/3.1.1/user/error-codes.html)
 
 ## Getting Started
