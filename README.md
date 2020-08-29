@@ -21,6 +21,24 @@ python manage.py rename <current_project_name> <new_project_name>
 #Example
 python manage.py rename demo my_project
 ```
+5. Generate Secret Key
+Use this key as your SECRET_KEY.
+Replace SECRET_KEY in 'src/.env'.
+
+Method 1
+```bash
+python manage.py shell
+```
+```python
+from django.core.management.utils import get_random_secret_key
+
+print(get_random_secret_key())
+```
+
+Method 2
+```bash
+python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+```
 
 #### Installing MiniConda
 Download and install MiniConda from [here](https://docs.conda.io/en/latest/miniconda.html).
@@ -73,6 +91,7 @@ python manage.py runserver
 ## Important Note
 - Uncomment '.env' inside .gitignore so that .env file is not uploaded in the repository.
 - Edit '.vscode/settings.json' ss per your choices.
+- You must generate a new secret key for your project.
 
 ## Production Note
 - Make sure to set environmental variable DEBUG=False.
