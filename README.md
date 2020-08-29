@@ -25,7 +25,7 @@ python manage.py rename demo my_project
 Use this key as your SECRET_KEY.
 Replace SECRET_KEY in 'src/.env'.
 
-Method 1
+	- Method 1
 ```bash
 python manage.py shell
 ```
@@ -35,7 +35,7 @@ from django.core.management.utils import get_random_secret_key
 print(get_random_secret_key())
 ```
 
-Method 2
+	- Method 2
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
