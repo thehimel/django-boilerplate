@@ -14,16 +14,16 @@ pip freeze > requirements.txt
 ```
 
 - Install Django. `pip install django`
-- Start a project named 'demo'. `django-admin startproject demo`
-- It will create a directory 'demo' having all the related files.
-- Rename this 'demo' to 'src'.
+- Start a project named 'basepro'. `django-admin startproject basepro`
+- It will create a directory 'basepro' having all the related files.
+- Rename this 'basepro' to 'src'.
 
 ### Section 1.2 - Installing Django Debug Toolbar
 Django Debug Toolbar is used to have a look at the underlying information.
 [Installation](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
 
 - Install DDT. `pip install django-debug-toolbar`
-- Include 'debug_toolbar' in the INSTALLED_APPS of src/demo/settings.py
+- Include 'debug_toolbar' in the INSTALLED_APPS of src/basepro/settings.py
 - Include the following lines in the settings.py.
 ```bash
 STATIC_URL = '/static/'
@@ -36,7 +36,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 ```
 
 - Create directory 'src/static_files'
-- Add this on the bottom of demo/urls.py
+- Add this on the bottom of basepro/urls.py
 ```python
 from django.conf import settings
 from django.urls import include, path
@@ -93,17 +93,17 @@ TEMPLATES = [
 ## Lesson 2 - Setting up Multiple Settings Modules
 We want to keep the settings.py as much as readable. Writing development settings and production settings in the same file makes it very large. Thus, with this technique we are going to decouple everthing and structure the settings in a better way.
 
-- Create directory 'demo/settings'
-- Create 'demo/settings/__init__.py' to enable file referencing in this directory.
-- Create 'demo/settings/base.py' where the default django settings and important settings will be stored. This is the common settings for development and production. Copy everthing from settings.py to base.py and delete the settings.py.
-- Create 'demo/settings/development.py' and 'demo/settings/production.py' for development and production respectively.
+- Create directory 'basepro/settings'
+- Create 'basepro/settings/__init__.py' to enable file referencing in this directory.
+- Create 'basepro/settings/base.py' where the default django settings and important settings will be stored. This is the common settings for development and production. Copy everthing from settings.py to base.py and delete the settings.py.
+- Create 'basepro/settings/development.py' and 'basepro/settings/production.py' for development and production respectively.
 - In base.py update the BASE_DIR as we have moved our settings file one directory down.
 ```python
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Customized the BASE_DIR as changed settings.py to settings directory.
 # By this we are selecting src as BASE_DIR.
 # Present file name is base.py. Parent of base.py is settings.
-# Parent of settings is demo and parent of demo is src.
+# settings -> parent -> <directory> -> parent -> src.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 ```
 
@@ -170,14 +170,18 @@ import sys
 from decouple import config
 
 
-# For Development use 'demo/settings/development.py'
-# For Production use 'demo/settings/production.py'
+# For Development use 'basepro/settings/development.py'
+# For Production use 'basepro/settings/production.py'
+PROJECT_NAME = 'basepro'
+
+# For Development use 'settings/development.py'
+# For Production use 'settings/production.py'
 DEBUG = config('DEBUG', cast=bool)
 
 if DEBUG:
-    SETTINGS_MODULE = 'demo.settings.development'
+    SETTINGS_MODULE = f'{PROJECT_NAME}.settings.development'
 else:
-    SETTINGS_MODULE = 'demo.settings.production'
+    SETTINGS_MODULE = f'{PROJECT_NAME}.settings.production'
 
 
 def main():
@@ -198,7 +202,7 @@ django-admin startapp core
 ```
 
 - Create 'core/management/commands/rename.py'. Here 'rename' is our command, thus we create this py file here.
-- The management directory can't be in demo which is our project directory. It has to be inside an app.
+- The management directory can't be in basepro which is our project directory. It has to be inside an app.
 - Create Command class in this file to make the command.
 - If you type this command, you can get information regarding all the commands. You can also notice rename command listed under core.
 ```bash
@@ -211,8 +215,8 @@ parser.add_argument('-p', '--prefix', type=str, help='Info to help.')
 - Write the logic and finish writing the code for rename command.
 
 ## Extra
-### Section X.1 - Configure demo/urls.py
-- Edit demo/urls.py
+### Section X.1 - Configure basepro/urls.py
+- Edit basepro/urls.py
 ```python
 urlpatterns = [
     ...
@@ -253,7 +257,11 @@ from manage import SETTINGS_MODULE
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', SETTINGS_MODULE)
 ```
 
-
+### Section X.3 - Refactor settings/base.py in the Project Directory
+Import PROJECT_NAME from manage.py and replace the project name string with this.
+```python
+from manage import PROJECT_NAME
+```
 
 ## Important
 - For testing purpose '.env' is commented inside .gitignore. Uncomment that just after cloning this repository.

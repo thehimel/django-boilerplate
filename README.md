@@ -19,7 +19,7 @@ Useful Links
 python manage.py rename <current_project_name> <new_project_name>
 
 #Example
-python manage.py rename demo my_project
+python manage.py rename current_project my_project
 ```
 5. Generate Secret Key
 Use this key as your SECRET_KEY.
