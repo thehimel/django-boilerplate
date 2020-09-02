@@ -58,6 +58,13 @@ pip install -r requirements.txt
 - autopep8 - Used for few auto linting with VSCode.
 - django-debug-toolbar - To manage debugging in development mode.
 
+- psycopg2 - for managing postgres db
+- dj-database-url - for postgres db url
+
+#### Important Package Versions
+- python==3.7
+- Django==3.1
+
 ##### Installation
 `pip install django, pillow, flake8, autopep8, django-debug-toolbar`
 > Included in requirements.txt - external installation not required.

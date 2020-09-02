@@ -13,6 +13,7 @@ from decouple import config
 from pathlib import Path
 
 
+PROJECT_NAME = 'demo'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Customized the BASE_DIR as changed settings.py to settings directory.
 # By this we are selecting src as BASE_DIR.
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'demo.urls'
+ROOT_URLCONF = f'{PROJECT_NAME}.urls'
 
 TEMPLATES = [
     {
@@ -73,8 +74,11 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'demo.wsgi.application'
+WSGI_APPLICATION = f'{PROJECT_NAME}.wsgi.application'
 
+# Database
+# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+DATABASES = {}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

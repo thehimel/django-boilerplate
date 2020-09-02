@@ -243,6 +243,18 @@ class HomeView(TemplateView):
     template_name = "core/home.html"
 ```
 
+### Section X.2 - Refactor asgi.py and wsgi.py in the Project Directory
+In production, this is wsgi.py is used to run the app.
+We import the SETTINGS_MODULE that is defined in the manage.py.
+
+```python
+from manage import SETTINGS_MODULE
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', SETTINGS_MODULE)
+```
+
+
+
 ## Important
 - For testing purpose '.env' is commented inside .gitignore. Uncomment that just after cloning this repository.
 - During production, set environment varibale DEBUG=True as this will select the productions settings.

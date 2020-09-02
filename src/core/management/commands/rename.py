@@ -26,9 +26,7 @@ class Command(BaseCommand):
 
         # List of files to rename
         files_to_rename = ['manage.py',
-                           f'{current_project_name}/settings/base.py',
-                           f'{current_project_name}/wsgi.py',
-                           f'{current_project_name}/asgi.py', ]
+                           f'{current_project_name}/settings/base.py', ]
 
         for f in files_to_rename:
             # Read the file and store the contents in a variable
