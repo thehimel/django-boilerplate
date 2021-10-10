@@ -6,7 +6,7 @@ from decouple import config
 
 
 # Include your hosts here
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # Redirect non-ssl requests to ssl version.
 SECURE_SSL_REDIRECT = True
@@ -23,9 +23,9 @@ SECURE_SSL_REDIRECT = True
 # }
 
 # create db dictionary with dj_database_url from DATABASE_URL
-postgres_db = dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600)
+postgres_db = dj_database_url.parse(config("DATABASE_URL"), conn_max_age=600)
 # DATABASES = {} is declared in the base.py
-DATABASES['default'] = postgres_db
+DATABASES["default"] = postgres_db
 
 # STRIPE_PUBLIC_KEY = config('STRIPE_LIVE_PUBLIC_KEY')
 # STRIPE_SECRET_KEY = config('STRIPE_LIVE_SECRET_KEY')

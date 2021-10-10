@@ -21,20 +21,18 @@ from django.urls import path, include
 from app.vars import NAME as MAIN_APP
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include(f"{MAIN_APP}.urls", namespace=MAIN_APP)),
+    path("admin/", admin.site.urls),
+    path("", include(f"{MAIN_APP}.urls", namespace=MAIN_APP)),
 ]
 
 if settings.DEBUG:
     import debug_toolbar
 
     # For Django Debug Toolbar in debug mode.
-    urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
+    urlpatterns += [path("__debug__/", include(debug_toolbar.urls))]
 
     # To serve static files in debug mode
-    urlpatterns += static(settings.STATIC_URL,
-                          document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
     # To serve media files in debug mode
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
