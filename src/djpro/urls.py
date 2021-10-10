@@ -18,10 +18,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
+from app.vars import NAME as MAIN_APP
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls', namespace='core')),
+    path('', include(f"{MAIN_APP}.urls", namespace=MAIN_APP)),
 ]
 
 if settings.DEBUG:
