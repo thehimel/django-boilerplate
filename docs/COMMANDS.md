@@ -9,6 +9,6 @@ pip install django
 pip install django-debug-toolbar
 pip install python-decouple
 
-django-admin startproject this_project
-python manage.py startapp core
+django-admin startproject core
+python manage.py startapp app
 ```
