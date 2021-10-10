@@ -83,14 +83,18 @@ ALLOWED_HOSTS = ["*"]
 
 ## Environmental Variables
 
-- For PostgreSQL
-  - DEV = False
-  - DATABASE_URL = YOUR_DATABASE_URL
+### Production
 
-- For SQLite
-  - Configuration not required.
-  - When DEV is not set as environmental variable, DEV = True.
-  - If DEV = True, SQLite is used.
+- `DEV = False`
+- SECRET_KEY = YOUR_DJANGO_SECRET_KEY
+- DATABASE_URL = YOUR_DATABASE_URL
+> `DEV = True` can be used to run production in debug mode.
+
+### Development
+
+- Configuration not required.
+- By default, `DEV = True, DEBUG = True`.
+> `DEBUG = False` can be used to hide Debug Toolbar.
 
 ## Deploying in Heroku
 
