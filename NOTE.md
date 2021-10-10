@@ -1,9 +1,12 @@
 # Note on Django Boilerplate Project
 
 ## Lesson 1 - Setting up the Debug Toolbar
+
 ### Section 1.1 - Project Initialization
+
 - Install miniconda from [here](https://docs.conda.io/en/latest/miniconda.html)
 - Create and activate a virtual environment.
+
 ```bash
 prompt $g
 conda remove --name env_dj --all
@@ -19,12 +22,14 @@ pip freeze > requirements.txt
 - Rename this 'basepro' to 'src'.
 
 ### Section 1.2 - Installing Django Debug Toolbar
+
 Django Debug Toolbar is used to have a look at the underlying information.
 [Installation](https://django-debug-toolbar.readthedocs.io/en/latest/installation.html)
 
 - Install DDT. `pip install django-debug-toolbar`
 - Include 'debug_toolbar' in the INSTALLED_APPS of src/basepro/settings.py
 - Include the following lines in the settings.py.
+
 ```bash
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files')]
@@ -37,6 +42,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 - Create directory 'src/static_files'
 - Add this on the bottom of basepro/urls.py
+
 ```python
 from django.conf import settings
 from django.urls import include, path
@@ -59,6 +65,7 @@ if settings.DEBUG:
 
 - Add DDT MIDDLEWARE in settings.py.
 - For development edit ALLOWED_HOSTS in settings.py. This is needed to run the DDT in debug mode.
+
 ```python
 ALLOWED_HOSTS = ['127.0.0.1',]
 ```
@@ -70,6 +77,7 @@ ALLOWED_HOSTS = ['127.0.0.1',]
 `python manage.py collectstatic`
 
 ### Section 1.3 - Configure templates
+
 - On the top of settings.py under BASE_DIR, add TEMPLATE_DIR.
 ```python
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
@@ -91,6 +99,7 @@ TEMPLATES = [
 - Create directory 'src/media'
 
 ## Lesson 2 - Setting up Multiple Settings Modules
+
 We want to keep the settings.py as much as readable. Writing development settings and production settings in the same file makes it very large. Thus, with this technique we are going to decouple everthing and structure the settings in a better way.
 
 - Create directory 'basepro/settings'
@@ -98,6 +107,7 @@ We want to keep the settings.py as much as readable. Writing development setting
 - Create 'basepro/settings/base.py' where the default django settings and important settings will be stored. This is the common settings for development and production. Copy everthing from settings.py to base.py and delete the settings.py.
 - Create 'basepro/settings/development.py' and 'basepro/settings/production.py' for development and production respectively.
 - In base.py update the BASE_DIR as we have moved our settings file one directory down.
+
 ```python
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Customized the BASE_DIR as changed settings.py to settings directory.
@@ -108,11 +118,14 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 ```
 
 - Extend development.py and production.py from base.py by including this in both the files. This way, development.py and production.py will keep all the settings of base.py and add few more settings to the existing settings.
+
 ```python
 from .base import *
 ```
+
 - Move DEBUG and ALLOWED_HOSTS variables in development.py and production.py. These variables will will defer from each other based development or production.
 - We need debug_toolbar and the following middleware only on development mode. Thus, move these from base.py to development.py. Also add the DEBUG TOOLBAR SETTINGS here.
+
 ```python
 INSTALLED_APPS += [
     'debug_toolbar'
@@ -146,6 +159,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': show_toolbar
 }
 ```
+
 - Configure development.py and production.py based on the needs.
 - We'll use sqlite for development and postgres for production.
 - Important for production. DEBUG=False and change ALLOWED_HOSTS doesn't contain the 127.0.0.1 or localhost.
@@ -155,18 +169,20 @@ We don't want to hard code our confidentials information.
 Python Decouple is used to safely fetch the confidentials keys from .env or OS. [More Info](https://pypi.org/project/python-decouple/)
 
 - Install Python Decouple
+
 ```bash
 pip install python-decouple
 ```
+
 - For development create 'src/.env'. Python Decouple will fetch the keys from here if exists.
 - Order of search by Decouple: 1. Environment variables, 2. Repository: ini or .env file, 3. Default argument passed to config.
 - Add '.env' to the .gitignore so that this file is not saved in the git repository. When you initiate Python .gitignore in GitHub, this is automatically added. But check it once.
 - In development Decouple will fetch the env variables from .env file.
 - In Heroku, you can add the env variables manually. That time Decouple will fetch the keys from the OS.
 - Edit src/manage.py to select the correct settings based on development or production.
+
 ```python
 import os
-import sys
 from decouple import config
 
 
@@ -195,6 +211,7 @@ We use `python manage.py command` to execute a command. We can add our custom co
 To create custom command(s), we must create an app. We can name our main app as 'core' or 'main'.
 
 - Create an app 'core'
+
 ```bash
 python manage.py startapp core
 # or
@@ -205,18 +222,25 @@ django-admin startapp core
 - The management directory can't be in basepro which is our project directory. It has to be inside an app.
 - Create Command class in this file to make the command.
 - If you type this command, you can get information regarding all the commands. You can also notice rename command listed under core.
+
 ```bash
 python manage.py help
 ```
+
 - In the add_arguments() method of Command class, if you name an argument with dash('-') at the beginning, then it will be an optional commands.
+
 ```python
 parser.add_argument('-p', '--prefix', type=str, help='Info to help.')
 ```
+
 - Write the logic and finish writing the code for rename command.
 
 ## Extra
+
 ### Section X.1 - Configure basepro/urls.py
+
 - Edit basepro/urls.py
+
 ```python
 urlpatterns = [
     ...
@@ -226,6 +250,7 @@ urlpatterns = [
 ```
 
 - Edit core/urls.py
+
 ```python
 from django.urls import path
 from .views import HomeView
@@ -238,6 +263,7 @@ urlpatterns = [
 ```
 
 - Edit core/views.py
+
 ```python
 from django.shortcuts import render
 from django.views.generic import TemplateView
@@ -248,6 +274,7 @@ class HomeView(TemplateView):
 ```
 
 ### Section X.2 - Refactor asgi.py and wsgi.py in the Project Directory
+
 In production, this is wsgi.py is used to run the app.
 We import the SETTINGS_MODULE that is defined in the manage.py.
 
@@ -258,6 +285,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', SETTINGS_MODULE)
 ```
 
 ### Section X.3 - Refactor settings/base.py in the Project Directory
+
 Import PROJECT_NAME from manage.py and replace the project name string with this.
 ```python
 from manage import PROJECT_NAME
@@ -265,4 +293,4 @@ from manage import PROJECT_NAME
 
 ## Important
 - For testing purpose '.env' is commented inside .gitignore. Uncomment that just after cloning this repository.
-- During production, set environment varibale DEBUG=True as this will select the productions settings.
+- During production, set environment variable DEBUG=True as this will select the productions settings.
