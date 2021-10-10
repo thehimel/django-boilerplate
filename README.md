@@ -64,6 +64,11 @@ pip freeze > requirements.txt
 - psycopg2: for managing postgres db
 - dj-database-url: for postgres db url
 
+#### Dependencies for heroku
+
+gunicorn
+whitenoise
+
 #### Important Package Versions
 
 - python==3.9
