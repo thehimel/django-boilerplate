@@ -2,19 +2,20 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from decouple import config
+from decouple import config, UndefinedValueError
 
 
 PROJECT_NAME = 'core'
 
 # For Development use 'settings/development.py'
 # For Production use 'settings/production.py'
-DEBUG = config('DEBUG', cast=bool)
+try:
+    DEV = config('DEV', cast=bool)
+except UndefinedValueError:
+    DEV = True
 
-if DEBUG:
-    SETTINGS_MODULE = f'{PROJECT_NAME}.settings.development'
-else:
-    SETTINGS_MODULE = f'{PROJECT_NAME}.settings.production'
+MODE = "development" if DEV else "production"
+SETTINGS_MODULE = f'{PROJECT_NAME}.settings.{MODE}'
 
 
 def main():

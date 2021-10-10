@@ -1,9 +1,15 @@
 # flake8: noqa
-from .base import *
+
+from core.settings.base import *
 import dj_database_url
+from decouple import config, UndefinedValueError
 
 # In production, make sure environment variable DEBUG=False
-DEBUG = config('DEBUG', cast=bool)
+# If the DEBUG is not set in production, it will be False.
+try:
+    DEBUG = config('DEBUG', cast=bool)
+except UndefinedValueError:
+    DEBUG = False
 
 # Include your hosts here
 ALLOWED_HOSTS = ['*']
