@@ -1,2 +1,2 @@
-web: gunicorn --pythonpath src djpro.wsgi --log-file -
+web: gunicorn --pythonpath src core.wsgi --log-file -
 manage.py migrate
