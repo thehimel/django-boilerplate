@@ -75,6 +75,12 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 You may need to create this directory in your codebase, so it will be available when `collectstatic` is run.
 Git does not support empty file directories, so you will have to create a file inside that directory as well.
 
+## Allowed Hosts
+
+```python
+ALLOWED_HOSTS = ["*"]
+```
+
 ## Environmental Variables
 
 - For PostgreSQL
