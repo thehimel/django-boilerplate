@@ -5,7 +5,7 @@ from django.core.management.base import BaseCommand
 """
 Command to rename the Django project.
 Usage: python manage.py rename <current_project_name> <new_project_name>
-Example: python manage.py current_project my_project
+Example: python manage.py rename current_project my_project
 """
 
 
