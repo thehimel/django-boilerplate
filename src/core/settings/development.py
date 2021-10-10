@@ -11,7 +11,7 @@ except UndefinedValueError:
     DEBUG = True
 
 # Including '127.0.0.1' for debug_toolbar
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", "djb1.herokuapp.com"]
 
 INSTALLED_APPS += [
     "debug_toolbar",
