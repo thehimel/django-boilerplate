@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "C:\\Users\\SANDHI\\.conda\\envs\\env_dj\\python.exe",
-    "python.autoComplete.extraPaths": [
-        "C:\\Users\\SANDHI\\.conda\\envs\\env_dj\\Lib\\site-packages"
-    ],
-    "editor.minimap.enabled": false,
-}
