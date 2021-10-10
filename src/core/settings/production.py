@@ -2,14 +2,8 @@
 
 from core.settings.base import *
 import dj_database_url
-from decouple import config, UndefinedValueError
+from decouple import config
 
-# In production, make sure environment variable DEBUG=False
-# If the DEBUG is not set in production, it will be False.
-try:
-    DEBUG = config('DEBUG', cast=bool)
-except UndefinedValueError:
-    DEBUG = False
 
 # Include your hosts here
 ALLOWED_HOSTS = ['*']
@@ -28,10 +22,8 @@ SECURE_SSL_REDIRECT = True
 #     }
 # }
 
-# Fetch the env var with decouple
-DATABASE_URL = config('DATABASE_URL')
 # create db dictionary with dj_database_url from DATABASE_URL
-postgres_db = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+postgres_db = dj_database_url.parse(config('DATABASE_URL'), conn_max_age=600)
 # DATABASES = {} is declared in the base.py
 DATABASES['default'] = postgres_db
 

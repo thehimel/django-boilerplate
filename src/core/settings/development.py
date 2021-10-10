@@ -1,9 +1,14 @@
 # flake8: noqa
 
 from core.settings.base import *
+from decouple import config, UndefinedValueError
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# If the DEBUG is not set in development, it will be True.
+try:
+    DEBUG = config('DEBUG', cast=bool)
+except UndefinedValueError:
+    DEBUG = True
 
 # Including '127.0.0.1' for debug_toolbar
 ALLOWED_HOSTS = ['127.0.0.1']
@@ -37,7 +42,7 @@ DEBUG_TOOLBAR_PANELS = [
 
 # Show or hide debug_toolbar
 def show_toolbar(request):
-    return True
+    return DEBUG
 
 
 DEBUG_TOOLBAR_CONFIG = {
