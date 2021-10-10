@@ -66,8 +66,8 @@ pip freeze > requirements.txt
 
 #### Dependencies for heroku
 
-gunicorn
-whitenoise
+gunicorn: Server
+whitenoise: Simplified static file serving
 
 #### Important Package Versions
 
