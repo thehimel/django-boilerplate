@@ -131,5 +131,6 @@ Thanks to justdjango for creating such an amazing boilerplate and step by step t
 ## Note
 
 For special commands and detailed note refer to the following links:
-- [COMMANDS.md](COMMANDS.md)
-- [NOTE.md](NOTE.md)
+- [COMMANDS.md](docs/COMMANDS.md)
+- [NOTE.md](docs/NOTE.md)
+- [HEROKU.md](docs/HEROKU.md)
