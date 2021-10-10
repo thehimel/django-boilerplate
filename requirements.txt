@@ -2,9 +2,10 @@ black
 dj-database-url
 Django
 django-debug-toolbar
+gunicorn
 Pillow
 pylint
 python-decouple
-gunicorn
-whitenoise
 psycopg2
+whitenoise
+
