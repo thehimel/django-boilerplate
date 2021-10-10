@@ -6,7 +6,7 @@ import dj_database_url
 DEBUG = config('DEBUG', cast=bool)
 
 # Include your hosts here
-ALLOWED_HOSTS = ['ip-address', 'www.your-website.com']
+ALLOWED_HOSTS = ['*']
 
 # Redirect non-ssl requests to ssl version.
 SECURE_SSL_REDIRECT = True
