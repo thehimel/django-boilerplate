@@ -6,5 +6,5 @@ gunicorn
 Pillow
 pylint
 python-decouple
-psycopg2
+psycopg2-binary
 whitenoise
